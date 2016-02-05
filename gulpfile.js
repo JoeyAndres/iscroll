@@ -8,7 +8,8 @@ var path = require('path'),
     babel = require("gulp-babel");
 
 var paths = {
-    js: ['./src/**/*.js']
+    js: ['./src/**/*.js'],
+    meteor_js: ['./build/**/*.js']
 };
 
 // JS section.
@@ -24,9 +25,19 @@ gulp.task('js', function() {
         .pipe(gulp.dest('./build'));
 });
 
+gulp.task('meteor-js', function() {
+    gulp.src('./build/iscroll.js')
+        .pipe(gulp.dest('./meteor-packages/iscroll'));
+    gulp.src('./build/iscroll-lite.js')
+        .pipe(gulp.dest('./meteor-packages/iscroll-lite'));
+    gulp.src('./build/iscroll-zoom.js')
+        .pipe(gulp.dest('./meteor-packages/iscroll-zoom'));
+});
+
 // Watcher section.
 gulp.task('watchers', function () {
     gulp.watch(paths.js, ['js']);
+    gulp.watch(paths.meteor_js, ['meteor-js']);
 });
 
-gulp.task('default', ['js', 'watchers']);
+gulp.task('default', ['js', 'meteor-js', 'watchers']);

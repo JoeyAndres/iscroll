@@ -2,4 +2,5 @@
 .DS_Store
 ._*
 node_modules
+/meteor-packages/*/.versions
 dist
