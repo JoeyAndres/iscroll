@@ -1,9 +1,22 @@
 let _IScroll = require('./core');
-let _ = require('underscore');
+
+function extend(destination, source) {
+    var property;
+    for (property in source) {
+        if (source[property] && source[property].constructor && source[property].constructor === Object) {
+            destination[property] = destination[property] || {};
+            utils.deepExtend(destination[property], source[property]);
+        } else {
+            destination[property] = source[property];
+        }
+    }
+    return destination;
+};
 
 class IScroll extends _IScroll {
     constructor(el, options) {
-        options = _.extend(options, {
+        options = options || {};
+        options = extend(options, {
             resizeScrollbars: true,
             mouseWheelSpeed: 20,
             snapThreshold: 0.334
@@ -52,13 +65,13 @@ class IScroll extends _IScroll {
     }
 }
 
-_.extend(IScroll.prototype, require('./wheel/wheel'));
-_.extend(IScroll.prototype, require('./snap/snap'));
-_.extend(IScroll.prototype, require('./snap/_end'));
-_.extend(IScroll.prototype, require('./keys/keys'));
-_.extend(IScroll.prototype, require('./default/_animate'));
-_.extend(IScroll.prototype, require('./default/handleEvent'));
-_.extend(IScroll.prototype, require('./indicator/indicator'));
+extend(IScroll.prototype, require('./wheel/wheel'));
+extend(IScroll.prototype, require('./snap/snap'));
+extend(IScroll.prototype, require('./snap/_end'));
+extend(IScroll.prototype, require('./keys/keys'));
+extend(IScroll.prototype, require('./default/_animate'));
+extend(IScroll.prototype, require('./default/handleEvent'));
+extend(IScroll.prototype, require('./indicator/indicator'));
 
 (function (window, document, Math) {
     if ( typeof window !== 'undefined' && !window.IScroll) {
