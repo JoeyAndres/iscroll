@@ -197,6 +197,10 @@ Sometimes you want to preserve native vertical scroll but being able to add an h
 
 See [event passthrough demo](http://lab.cubiq.org/iscroll5/demos/event-passthrough/) on a mobile device. Note that this can be set to `'horizontal'` to inverse the behavior (native horizontal scroll, vertical iScroll).
 
+### stopPropagation
+
+This is helpful if you don't want mouse/touch/pointer events to propagate up the DOM tree.
+
 ### <small>options.</small>freeScroll
 
 This is useful mainly on 2D scrollers (when you need to scroll both horizontally and vertically). Normally when you start scrolling in one direction the other is locked.

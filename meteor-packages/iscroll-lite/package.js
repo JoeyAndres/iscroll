@@ -1,7 +1,7 @@
 Package.describe({
     name: "jandres:iscroll-lite",
     summary: "https://github.com/JoeyAndres/iscroll.git",
-    version: "5.1.5",
+    version: "5.1.6",
     documentation: null,
     git: "https://github.com/JoeyAndres/iscroll.git"
 });

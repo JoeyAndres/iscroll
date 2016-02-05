@@ -54,7 +54,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                     HWCompositing: true,
                     useTransition: true,
-                    useTransform: true
+                    useTransform: true,
+
+                    stopPropagation: true
                 };
 
                 for (var i in options) {
@@ -134,6 +136,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }, {
                 key: "_start",
                 value: function _start(e) {
+                    if (this.options.stopPropagation) {
+                        e.stopPropagation();
+                    }
+
                     // React to left mouse button only
                     if (utils.eventType[e.type] != 1) {
                         if (e.button !== 0) {
@@ -186,6 +192,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }, {
                 key: "_move",
                 value: function _move(e) {
+                    if (this.options.stopPropagation) {
+                        e.stopPropagation();
+                    }
+
                     if (!this.enabled || utils.eventType[e.type] !== this.initiated) {
                         return;
                     }
@@ -286,6 +296,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }, {
                 key: "_end",
                 value: function _end(e) {
+                    if (this.options.stopPropagation) {
+                        e.stopPropagation();
+                    }
+
                     if (!this.enabled || utils.eventType[e.type] !== this.initiated) {
                         return;
                     }
