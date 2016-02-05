@@ -22,7 +22,9 @@ class IScroll {
 
             HWCompositing: true,
             useTransition: true,
-            useTransform: true
+            useTransform: true,
+
+            stopPropagation: true
         };
 
         for (var i in options) {
@@ -95,6 +97,8 @@ class IScroll {
     }
 
     _start(e) {
+        if (this.options.stopPropagation) { e.stopPropagation(); }
+
         // React to left mouse button only
         if (utils.eventType[e.type] != 1) {
             if (e.button !== 0) {
@@ -146,6 +150,8 @@ class IScroll {
     }
 
     _move (e) {
+        if (this.options.stopPropagation) { e.stopPropagation(); }
+
         if (!this.enabled || utils.eventType[e.type] !== this.initiated) {
             return;
         }
@@ -243,6 +249,8 @@ class IScroll {
     }
 
     _end (e) {
+        if (this.options.stopPropagation) { e.stopPropagation(); }
+
         if (!this.enabled || utils.eventType[e.type] !== this.initiated) {
             return;
         }

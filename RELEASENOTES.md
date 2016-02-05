@@ -1,5 +1,10 @@
 # Release notes for iScroll
 
+## Version 5.1.9 - 2016.02.05
+
+### New Features
+* stopPropagation option
+
 ---
 
 ##  Version 5.1.1 - 2014.01.10
