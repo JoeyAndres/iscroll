@@ -803,18 +803,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }, {}], 4: [function (require, module, exports) {
         var _IScroll = require('./core');
 
-        function extend(destination, source) {
-            var property;
-            for (property in source) {
-                if (source[property] && source[property].constructor && source[property].constructor === Object) {
-                    destination[property] = destination[property] || {};
-                    extend(destination[property], source[property]);
-                } else {
-                    destination[property] = source[property];
-                }
-            }
-            return destination;
-        };
+        var _require3 = require('./utils');
+
+        var rAF = _require3.rAF;
+        var utils = _require3.utils;
 
         var IScroll = function (_IScroll2) {
             _inherits(IScroll, _IScroll2);
@@ -823,7 +815,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 _classCallCheck(this, IScroll);
 
                 options = options || {};
-                options = extend(options, {
+                utils.extend(options, {
                     resizeScrollbars: true,
                     mouseWheelSpeed: 20,
                     snapThreshold: 0.334
@@ -886,14 +878,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return IScroll;
         }(_IScroll);
 
-        extend(IScroll.prototype, require('./indicator/_initIndicators'));
-        extend(IScroll.prototype, require('./wheel/wheel'));
-        extend(IScroll.prototype, require('./snap/snap'));
-        extend(IScroll.prototype, require('./snap/_end'));
-        extend(IScroll.prototype, require('./keys/keys'));
-        extend(IScroll.prototype, require('./default/_animate'));
-        extend(IScroll.prototype, require('./default/handleEvent'));
-        extend(IScroll.prototype, require('./indicator/indicator'));
+        utils.extend(IScroll.prototype, require('./indicator/_initIndicators'));
+        utils.extend(IScroll.prototype, require('./wheel/wheel'));
+        utils.extend(IScroll.prototype, require('./snap/snap'));
+        utils.extend(IScroll.prototype, require('./snap/_end'));
+        utils.extend(IScroll.prototype, require('./keys/keys'));
+        utils.extend(IScroll.prototype, require('./default/_animate'));
+        utils.extend(IScroll.prototype, require('./default/handleEvent'));
+        utils.extend(IScroll.prototype, require('./indicator/indicator'));
 
         (function (window, document, Math) {
             if (typeof module !== 'undefined') {
@@ -904,7 +896,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 window.IScroll = IScroll;
             }
         })(window, document, Math);
-    }, { "./core": 1, "./default/_animate": 2, "./default/handleEvent": 3, "./indicator/_initIndicators": 5, "./indicator/_transitionTime": 6, "./indicator/_transitionTimingFunction": 7, "./indicator/_translate": 8, "./indicator/indicator": 9, "./keys/keys": 10, "./snap/_end": 11, "./snap/refresh": 12, "./snap/snap": 13, "./wheel/wheel": 15 }], 5: [function (require, module, exports) {
+    }, { "./core": 1, "./default/_animate": 2, "./default/handleEvent": 3, "./indicator/_initIndicators": 5, "./indicator/_transitionTime": 6, "./indicator/_transitionTimingFunction": 7, "./indicator/_translate": 8, "./indicator/indicator": 9, "./keys/keys": 10, "./snap/_end": 11, "./snap/refresh": 12, "./snap/snap": 13, "./utils": 14, "./wheel/wheel": 15 }], 5: [function (require, module, exports) {
         module.exports = {
             _initIndicators: function _initIndicators() {
                 var interactive = this.options.interactiveScrollbars,
@@ -1034,10 +1026,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
         };
     }, {}], 9: [function (require, module, exports) {
-        var _require3 = require('../utils');
+        var _require4 = require('../utils');
 
-        var rAF = _require3.rAF;
-        var utils = _require3.utils;
+        var rAF = _require4.rAF;
+        var utils = _require4.utils;
 
         function createDefaultScrollbar(direction, interactive, type) {
             var scrollbar = document.createElement('div'),
@@ -2118,10 +2110,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }()
         };
     }, {}], 15: [function (require, module, exports) {
-        var _require4 = require('../utils');
+        var _require5 = require('../utils');
 
-        var rAF = _require4.rAF;
-        var utils = _require4.utils;
+        var rAF = _require5.rAF;
+        var utils = _require5.utils;
 
         module.exports = {
             _initWheel: function _initWheel() {

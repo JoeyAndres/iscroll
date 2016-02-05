@@ -799,18 +799,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }, {}], 4: [function (require, module, exports) {
         var _IScroll = require('./core');
 
-        function extend(destination, source) {
-            var property;
-            for (property in source) {
-                if (source[property] && source[property].constructor && source[property].constructor === Object) {
-                    destination[property] = destination[property] || {};
-                    extend(destination[property], source[property]);
-                } else {
-                    destination[property] = source[property];
-                }
-            }
-            return destination;
-        };
+        var _require3 = require('./utils');
+
+        var rAF = _require3.rAF;
+        var utils = _require3.utils;
 
         var IScroll = function (_IScroll2) {
             _inherits(IScroll, _IScroll2);
@@ -824,9 +816,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return IScroll;
         }(_IScroll);
 
-        extend(IScroll.prototype, require('./default/_animate'));
-        extend(IScroll.prototype, require('./default/handleEvent'));
-        extend(IScroll.prototype, require('./indicator/indicator'));
+        utils.extend(IScroll.prototype, require('./default/_animate'));
+        utils.extend(IScroll.prototype, require('./default/handleEvent'));
+        utils.extend(IScroll.prototype, require('./indicator/indicator'));
 
         (function (window, document, Math) {
             if (typeof module !== 'undefined') {
@@ -837,11 +829,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 window.IScroll = IScroll;
             }
         })(window, document, Math);
-    }, { "./core": 1, "./default/_animate": 2, "./default/handleEvent": 3, "./indicator/indicator": 5 }], 5: [function (require, module, exports) {
-        var _require3 = require('../utils');
+    }, { "./core": 1, "./default/_animate": 2, "./default/handleEvent": 3, "./indicator/indicator": 5, "./utils": 6 }], 5: [function (require, module, exports) {
+        var _require4 = require('../utils');
 
-        var rAF = _require3.rAF;
-        var utils = _require3.utils;
+        var rAF = _require4.rAF;
+        var utils = _require4.utils;
 
         function createDefaultScrollbar(direction, interactive, type) {
             var scrollbar = document.createElement('div'),

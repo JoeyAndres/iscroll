@@ -1,23 +1,10 @@
 let _IScroll = require('./core');
 let {rAF: rAF, utils: utils} = require('./utils');
 
-function extend(destination, source) {
-    var property;
-    for (property in source) {
-        if (source[property] && source[property].constructor && source[property].constructor === Object) {
-            destination[property] = destination[property] || {};
-            extend(destination[property], source[property]);
-        } else {
-            destination[property] = source[property];
-        }
-    }
-    return destination;
-};
-
 class IScroll extends _IScroll {
     constructor(el, options) {
         options = options || {};
-        options = extend(options, {
+        utils.extend(options, {
             resizeScrollbars: true,
             mouseWheelSpeed: 20,
             snapThreshold: 0.334,
@@ -72,16 +59,16 @@ class IScroll extends _IScroll {
     }
 }
 
-extend(IScroll.prototype, require('./indicator/_initIndicators'));
-extend(IScroll.prototype, require('./zoom/zoom'));
-extend(IScroll.prototype, require('./wheel/wheel'));
-extend(IScroll.prototype, require('./snap/snap'));
-extend(IScroll.prototype, require('./snap/_end'));
-extend(IScroll.prototype, require('./keys/keys'));
-extend(IScroll.prototype, require('./default/_animate'));
-extend(IScroll.prototype, require('./zoom/handleEvent'));
-extend(IScroll.prototype, require('./indicator/indicator'));
-extend(IScroll.prototype, require('./zoom/refresh'));
+utils.extend(IScroll.prototype, require('./indicator/_initIndicators'));
+utils.extend(IScroll.prototype, require('./zoom/zoom'));
+utils.extend(IScroll.prototype, require('./wheel/wheel'));
+utils.extend(IScroll.prototype, require('./snap/snap'));
+utils.extend(IScroll.prototype, require('./snap/_end'));
+utils.extend(IScroll.prototype, require('./keys/keys'));
+utils.extend(IScroll.prototype, require('./default/_animate'));
+utils.extend(IScroll.prototype, require('./zoom/handleEvent'));
+utils.extend(IScroll.prototype, require('./indicator/indicator'));
+utils.extend(IScroll.prototype, require('./zoom/refresh'));
 
 (function (window, document, Math) {
     if (typeof module !== 'undefined') {
