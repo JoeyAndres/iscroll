@@ -1,11 +1,12 @@
 let _IScroll = require('./core');
+let {rAF: rAF, utils: utils} = require('./utils');
 
 function extend(destination, source) {
     var property;
     for (property in source) {
         if (source[property] && source[property].constructor && source[property].constructor === Object) {
             destination[property] = destination[property] || {};
-            utils.deepExtend(destination[property], source[property]);
+            extend(destination[property], source[property]);
         } else {
             destination[property] = source[property];
         }
@@ -26,6 +27,7 @@ class IScroll extends _IScroll {
             startZoom: 1
         });
         super(el, options);
+        this.scale = Math.min(Math.max(this.options.startZoom, this.options.zoomMin), this.options.zoomMax);
     }
 
     refresh() {
@@ -57,6 +59,10 @@ class IScroll extends _IScroll {
         return require('./indicator/_translate').call(this, x, y);
     }
 
+    __translate (x, y) {
+        this.scrollerStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px) scale(' + this.scale + ') ' + this.translateZ;
+    }
+
     _normalize () {
         if (this.options.shrinkScrollbars == 'scale') {
             this.options.useTransition = false;
@@ -75,6 +81,7 @@ extend(IScroll.prototype, require('./keys/keys'));
 extend(IScroll.prototype, require('./default/_animate'));
 extend(IScroll.prototype, require('./zoom/handleEvent'));
 extend(IScroll.prototype, require('./indicator/indicator'));
+extend(IScroll.prototype, require('./zoom/refresh'));
 
 (function (window, document, Math) {
     if (typeof module !== 'undefined') {

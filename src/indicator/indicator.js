@@ -1,3 +1,5 @@
+let {rAF: rAF, utils: utils} = require('../utils');
+
 function createDefaultScrollbar (direction, interactive, type) {
     var scrollbar = document.createElement('div'),
         indicator = document.createElement('div');

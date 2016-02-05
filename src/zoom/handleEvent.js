@@ -6,7 +6,6 @@ module.exports = {
             case 'MSPointerDown':
             case 'mousedown':
                 this._start(e);
-
                 if ( this.options.zoom && e.touches && e.touches.length > 1 ) {
                     this._zoomStart(e);
                 }

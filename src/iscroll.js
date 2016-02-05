@@ -5,7 +5,7 @@ function extend(destination, source) {
     for (property in source) {
         if (source[property] && source[property].constructor && source[property].constructor === Object) {
             destination[property] = destination[property] || {};
-            utils.deepExtend(destination[property], source[property]);
+            extend(destination[property], source[property]);
         } else {
             destination[property] = source[property];
         }
@@ -32,7 +32,7 @@ class IScroll extends _IScroll {
     _init() {
         super._init();
         if ( this.options.scrollbars || this.options.indicators ) { this._initIndicators(); }
-        if ( this.options.mouseWheel ) { this._initWheel(); }
+        if ( this.options.mouseWheel ) { this._initWheel(); console.log('asdf'); }
         if ( this.options.snap ) { this._initSnap(); }
         if ( this.options.keyBindings ) { this._initKeys(); }
     }
@@ -69,7 +69,6 @@ extend(IScroll.prototype, require('./keys/keys'));
 extend(IScroll.prototype, require('./default/_animate'));
 extend(IScroll.prototype, require('./default/handleEvent'));
 extend(IScroll.prototype, require('./indicator/indicator'));
-extend(IScroll.prototype, require('./zoom/refresh'));
 
 (function (window, document, Math) {
     if (typeof module !== 'undefined') {

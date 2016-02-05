@@ -378,13 +378,9 @@ class IScroll {
         this.wrapperWidth = this.wrapper.clientWidth;
         this.wrapperHeight = this.wrapper.clientHeight;
 
-        /* REPLACE START: refresh */
-
         let {width: width, height: height} = this._getScrollerSize();
         this.scrollerWidth = width;
         this.scrollerHeight = height;
-
-        /* REPLACE END: refresh */
 
         this.maxScrollX = this.wrapperWidth - this.scrollerWidth;
         this.maxScrollY = this.wrapperHeight - this.scrollerHeight;
@@ -530,11 +526,7 @@ class IScroll {
     _translate (x, y) {
         if (this.options.useTransform) {
 
-            /* REPLACE START: _translate */
-
-            this.scrollerStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px)' + this.translateZ;
-
-            /* REPLACE END: _translate */
+            this.__translate (x, y);
 
         } else {
             x = Math.round(x);
@@ -612,6 +604,9 @@ class IScroll {
      */
     _getScrollerSize() {
         return { width: this.scroller.offsetWidth, height: this.scroller.offsetHeight };
+    }
+    __translate(x, y) {
+        this.scrollerStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px)' + this.translateZ;
     }
 }
 IScroll.utils = utils;

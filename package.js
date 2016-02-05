@@ -11,6 +11,6 @@ Package.onUse(function(api) {
     ], 'client');
 
     api.addFiles([
-        'build/iscroll.js'
+        'build/iscroll-zoom.js'
     ], 'client');
 });

@@ -1,3 +1,5 @@
+let {rAF: rAF, utils: utils} = require('../utils');
+
 module.exports = {
     _initWheel: function () {
         utils.addEvent(this.wrapper, 'wheel', this);

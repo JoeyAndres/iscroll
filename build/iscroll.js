@@ -432,8 +432,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     this.wrapperWidth = this.wrapper.clientWidth;
                     this.wrapperHeight = this.wrapper.clientHeight;
 
-                    /* REPLACE START: refresh */
-
                     var _getScrollerSize2 = this._getScrollerSize();
 
                     var width = _getScrollerSize2.width;
@@ -441,8 +439,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                     this.scrollerWidth = width;
                     this.scrollerHeight = height;
-
-                    /* REPLACE END: refresh */
 
                     this.maxScrollX = this.wrapperWidth - this.scrollerWidth;
                     this.maxScrollY = this.wrapperHeight - this.scrollerHeight;
@@ -601,17 +597,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 value: function _translate(x, y) {
                     if (this.options.useTransform) {
 
-                        /* REPLACE START: _translate */
-
-                        this.scrollerStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px)' + this.translateZ;
-
-                        /* REPLACE END: _translate */
+                        this.__translate(x, y);
                     } else {
-                            x = Math.round(x);
-                            y = Math.round(y);
-                            this.scrollerStyle.left = x + 'px';
-                            this.scrollerStyle.top = y + 'px';
-                        }
+                        x = Math.round(x);
+                        y = Math.round(y);
+                        this.scrollerStyle.left = x + 'px';
+                        this.scrollerStyle.top = y + 'px';
+                    }
 
                     this.x = x;
                     this.y = y;
@@ -696,6 +688,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 value: function _getScrollerSize() {
                     return { width: this.scroller.offsetWidth, height: this.scroller.offsetHeight };
                 }
+            }, {
+                key: "__translate",
+                value: function __translate(x, y) {
+                    this.scrollerStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px)' + this.translateZ;
+                }
             }]);
 
             return IScroll;
@@ -705,6 +702,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         module.exports = IScroll;
     }, { "./utils": 14 }], 2: [function (require, module, exports) {
+        var _require2 = require('../utils');
+
+        var rAF = _require2.rAF;
+        var utils = _require2.utils;
+
         module.exports = {
             _animate: function _animate(destX, destY, duration, easingFn) {
                 var that = this,
@@ -745,7 +747,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 step();
             }
         };
-    }, {}], 3: [function (require, module, exports) {
+    }, { "../utils": 14 }], 3: [function (require, module, exports) {
         module.exports = {
             handleEvent: function handleEvent(e) {
                 switch (e.type) {
@@ -806,7 +808,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             for (property in source) {
                 if (source[property] && source[property].constructor && source[property].constructor === Object) {
                     destination[property] = destination[property] || {};
-                    utils.deepExtend(destination[property], source[property]);
+                    extend(destination[property], source[property]);
                 } else {
                     destination[property] = source[property];
                 }
@@ -843,7 +845,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         this._initIndicators();
                     }
                     if (this.options.mouseWheel) {
-                        this._initWheel();
+                        this._initWheel();console.log('asdf');
                     }
                     if (this.options.snap) {
                         this._initSnap();
@@ -892,7 +894,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         extend(IScroll.prototype, require('./default/_animate'));
         extend(IScroll.prototype, require('./default/handleEvent'));
         extend(IScroll.prototype, require('./indicator/indicator'));
-        extend(IScroll.prototype, require('./zoom/refresh'));
 
         (function (window, document, Math) {
             if (typeof module !== 'undefined') {
@@ -903,7 +904,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 window.IScroll = IScroll;
             }
         })(window, document, Math);
-    }, { "./core": 1, "./default/_animate": 2, "./default/handleEvent": 3, "./indicator/_initIndicators": 5, "./indicator/_transitionTime": 6, "./indicator/_transitionTimingFunction": 7, "./indicator/_translate": 8, "./indicator/indicator": 9, "./keys/keys": 10, "./snap/_end": 11, "./snap/refresh": 12, "./snap/snap": 13, "./wheel/wheel": 15, "./zoom/refresh": 16 }], 5: [function (require, module, exports) {
+    }, { "./core": 1, "./default/_animate": 2, "./default/handleEvent": 3, "./indicator/_initIndicators": 5, "./indicator/_transitionTime": 6, "./indicator/_transitionTimingFunction": 7, "./indicator/_translate": 8, "./indicator/indicator": 9, "./keys/keys": 10, "./snap/_end": 11, "./snap/refresh": 12, "./snap/snap": 13, "./wheel/wheel": 15 }], 5: [function (require, module, exports) {
         module.exports = {
             _initIndicators: function _initIndicators() {
                 var interactive = this.options.interactiveScrollbars,
@@ -1033,6 +1034,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
         };
     }, {}], 9: [function (require, module, exports) {
+        var _require3 = require('../utils');
+
+        var rAF = _require3.rAF;
+        var utils = _require3.utils;
+
         function createDefaultScrollbar(direction, interactive, type) {
             var scrollbar = document.createElement('div'),
                 indicator = document.createElement('div');
@@ -1470,7 +1476,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }();
 
         ;
-    }, {}], 10: [function (require, module, exports) {
+    }, { "../utils": 14 }], 10: [function (require, module, exports) {
         module.exports = {
             _initKeys: function _initKeys(e) {
                 // default key bindings
@@ -2112,6 +2118,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }()
         };
     }, {}], 15: [function (require, module, exports) {
+        var _require4 = require('../utils');
+
+        var rAF = _require4.rAF;
+        var utils = _require4.utils;
+
         module.exports = {
             _initWheel: function _initWheel() {
                 utils.addEvent(this.wrapper, 'wheel', this);
@@ -2218,11 +2229,4 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 // INSERT POINT: _wheel
             }
         };
-    }, {}], 16: [function (require, module, exports) {
-        module.exports = {
-            _getScrollerSize: function _getScrollerSize() {
-                this.scrollerWidth = Math.round(this.scroller.offsetWidth * this.scale);
-                this.scrollerHeight = Math.round(this.scroller.offsetHeight * this.scale);
-            }
-        };
-    }, {}] }, {}, [4]);
+    }, { "../utils": 14 }] }, {}, [4]);

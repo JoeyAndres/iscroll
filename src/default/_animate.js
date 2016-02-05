@@ -1,3 +1,5 @@
+let {rAF: rAF, utils: utils} = require('../utils');
+
 module.exports = {
     _animate: function (destX, destY, duration, easingFn) {
         var that = this,

@@ -5,7 +5,7 @@ function extend(destination, source) {
     for (property in source) {
         if (source[property] && source[property].constructor && source[property].constructor === Object) {
             destination[property] = destination[property] || {};
-            utils.deepExtend(destination[property], source[property]);
+            extend(destination[property], source[property]);
         } else {
             destination[property] = source[property];
         }

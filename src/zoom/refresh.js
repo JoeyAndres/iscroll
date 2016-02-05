@@ -1,6 +1,7 @@
 module.exports = {
     _getScrollerSize () {
-        this.scrollerWidth = Math.round(this.scroller.offsetWidth * this.scale);
-        this.scrollerHeight = Math.round(this.scroller.offsetHeight * this.scale);
+        let width = Math.round(this.scroller.offsetWidth * this.scale);
+        let height = Math.round(this.scroller.offsetHeight * this.scale);
+        return { width: width, height: height };
     }
 };

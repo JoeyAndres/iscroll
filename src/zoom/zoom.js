@@ -1,3 +1,5 @@
+let {rAF: rAF, utils: utils} = require('../utils');
+
 module.exports = {
     _initZoom: function () {
         this.scrollerStyle[utils.style.transformOrigin] = '0 0';
