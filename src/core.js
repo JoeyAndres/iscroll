@@ -380,13 +380,14 @@ class IScroll {
 
         /* REPLACE START: refresh */
 
-        this.scrollerWidth = this.scroller.offsetWidth;
-        this.scrollerHeight = this.scroller.offsetHeight;
+        let {width: width, height: height} = this._getScrollerSize();
+        this.scrollerWidth = width;
+        this.scrollerHeight = height;
+
+        /* REPLACE END: refresh */
 
         this.maxScrollX = this.wrapperWidth - this.scrollerWidth;
         this.maxScrollY = this.wrapperHeight - this.scrollerHeight;
-
-        /* REPLACE END: refresh */
 
         this.hasHorizontalScroll = this.options.scrollX && this.maxScrollX < 0;
         this.hasVerticalScroll = this.options.scrollY && this.maxScrollY < 0;
@@ -603,6 +604,15 @@ class IScroll {
     _normalize() {}
     _insert_point() {}
     __end(newX, newY, time, easing) { return { newX, newY, time, easing }; }
+
+    /**
+     * Size of the content.
+     * @returns {{width: number, height: number}}
+     * @private
+     */
+    _getScrollerSize() {
+        return { width: this.scroller.offsetWidth, height: this.scroller.offsetHeight };
+    }
 }
 IScroll.utils = utils;
 

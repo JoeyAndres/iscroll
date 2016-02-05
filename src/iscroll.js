@@ -59,12 +59,9 @@ class IScroll extends _IScroll {
         this.options.invertWheelDirection = this.options.invertWheelDirection ? -1 : 1;
         super._normalize();
     }
-
-    _initIndicators () {
-        return require('./indicator/_initIndicators').call(this);
-    }
 }
 
+extend(IScroll.prototype, require('./indicator/_initIndicators'));
 extend(IScroll.prototype, require('./wheel/wheel'));
 extend(IScroll.prototype, require('./snap/snap'));
 extend(IScroll.prototype, require('./snap/_end'));
@@ -72,6 +69,7 @@ extend(IScroll.prototype, require('./keys/keys'));
 extend(IScroll.prototype, require('./default/_animate'));
 extend(IScroll.prototype, require('./default/handleEvent'));
 extend(IScroll.prototype, require('./indicator/indicator'));
+extend(IScroll.prototype, require('./zoom/refresh'));
 
 (function (window, document, Math) {
     if (typeof module !== 'undefined') {

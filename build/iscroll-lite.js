@@ -430,13 +430,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                     /* REPLACE START: refresh */
 
-                    this.scrollerWidth = this.scroller.offsetWidth;
-                    this.scrollerHeight = this.scroller.offsetHeight;
+                    var _getScrollerSize2 = this._getScrollerSize();
+
+                    var width = _getScrollerSize2.width;
+                    var height = _getScrollerSize2.height;
+
+                    this.scrollerWidth = width;
+                    this.scrollerHeight = height;
+
+                    /* REPLACE END: refresh */
 
                     this.maxScrollX = this.wrapperWidth - this.scrollerWidth;
                     this.maxScrollY = this.wrapperHeight - this.scrollerHeight;
-
-                    /* REPLACE END: refresh */
 
                     this.hasHorizontalScroll = this.options.scrollX && this.maxScrollX < 0;
                     this.hasVerticalScroll = this.options.scrollY && this.maxScrollY < 0;
@@ -674,6 +679,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 key: "__end",
                 value: function __end(newX, newY, time, easing) {
                     return { newX: newX, newY: newY, time: time, easing: easing };
+                }
+
+                /**
+                 * Size of the content.
+                 * @returns {{width: number, height: number}}
+                 * @private
+                 */
+
+            }, {
+                key: "_getScrollerSize",
+                value: function _getScrollerSize() {
+                    return { width: this.scroller.offsetWidth, height: this.scroller.offsetHeight };
                 }
             }]);
 

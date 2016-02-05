@@ -13,7 +13,7 @@ var paths = {
 
 // JS section.
 gulp.task('js', function() {
-    gulp.src(['./src/iscroll.js', './src/iscroll-lite.js'])
+    gulp.src(['./src/iscroll.js', './src/iscroll-lite.js', './src/iscroll-zoom.js'])
         .pipe(browserify())
         .pipe(babel({
             compact: false

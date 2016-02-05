@@ -434,13 +434,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                     /* REPLACE START: refresh */
 
-                    this.scrollerWidth = this.scroller.offsetWidth;
-                    this.scrollerHeight = this.scroller.offsetHeight;
+                    var _getScrollerSize2 = this._getScrollerSize();
+
+                    var width = _getScrollerSize2.width;
+                    var height = _getScrollerSize2.height;
+
+                    this.scrollerWidth = width;
+                    this.scrollerHeight = height;
+
+                    /* REPLACE END: refresh */
 
                     this.maxScrollX = this.wrapperWidth - this.scrollerWidth;
                     this.maxScrollY = this.wrapperHeight - this.scrollerHeight;
-
-                    /* REPLACE END: refresh */
 
                     this.hasHorizontalScroll = this.options.scrollX && this.maxScrollX < 0;
                     this.hasVerticalScroll = this.options.scrollY && this.maxScrollY < 0;
@@ -679,6 +684,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 value: function __end(newX, newY, time, easing) {
                     return { newX: newX, newY: newY, time: time, easing: easing };
                 }
+
+                /**
+                 * Size of the content.
+                 * @returns {{width: number, height: number}}
+                 * @private
+                 */
+
+            }, {
+                key: "_getScrollerSize",
+                value: function _getScrollerSize() {
+                    return { width: this.scroller.offsetWidth, height: this.scroller.offsetHeight };
+                }
             }]);
 
             return IScroll;
@@ -862,16 +879,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     this.options.invertWheelDirection = this.options.invertWheelDirection ? -1 : 1;
                     _get(Object.getPrototypeOf(IScroll.prototype), "_normalize", this).call(this);
                 }
-            }, {
-                key: "_initIndicators",
-                value: function _initIndicators() {
-                    return require('./indicator/_initIndicators').call(this);
-                }
             }]);
 
             return IScroll;
         }(_IScroll);
 
+        extend(IScroll.prototype, require('./indicator/_initIndicators'));
         extend(IScroll.prototype, require('./wheel/wheel'));
         extend(IScroll.prototype, require('./snap/snap'));
         extend(IScroll.prototype, require('./snap/_end'));
@@ -879,6 +892,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         extend(IScroll.prototype, require('./default/_animate'));
         extend(IScroll.prototype, require('./default/handleEvent'));
         extend(IScroll.prototype, require('./indicator/indicator'));
+        extend(IScroll.prototype, require('./zoom/refresh'));
 
         (function (window, document, Math) {
             if (typeof module !== 'undefined') {
@@ -889,108 +903,110 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 window.IScroll = IScroll;
             }
         })(window, document, Math);
-    }, { "./core": 1, "./default/_animate": 2, "./default/handleEvent": 3, "./indicator/_initIndicators": 5, "./indicator/_transitionTime": 6, "./indicator/_transitionTimingFunction": 7, "./indicator/_translate": 8, "./indicator/indicator": 9, "./keys/keys": 10, "./snap/_end": 11, "./snap/refresh": 12, "./snap/snap": 13, "./wheel/wheel": 15 }], 5: [function (require, module, exports) {
-        module.exports = function () {
-            var interactive = this.options.interactiveScrollbars,
-                customStyle = typeof this.options.scrollbars != 'string',
-                indicators = [],
-                indicator;
+    }, { "./core": 1, "./default/_animate": 2, "./default/handleEvent": 3, "./indicator/_initIndicators": 5, "./indicator/_transitionTime": 6, "./indicator/_transitionTimingFunction": 7, "./indicator/_translate": 8, "./indicator/indicator": 9, "./keys/keys": 10, "./snap/_end": 11, "./snap/refresh": 12, "./snap/snap": 13, "./wheel/wheel": 15, "./zoom/refresh": 16 }], 5: [function (require, module, exports) {
+        module.exports = {
+            _initIndicators: function _initIndicators() {
+                var interactive = this.options.interactiveScrollbars,
+                    customStyle = typeof this.options.scrollbars != 'string',
+                    indicators = [],
+                    indicator;
 
-            var that = this;
+                var that = this;
 
-            this.indicators = [];
+                this.indicators = [];
 
-            if (this.options.scrollbars) {
-                // Vertical scrollbar
-                if (this.options.scrollY) {
-                    indicator = {
-                        el: createDefaultScrollbar('v', interactive, this.options.scrollbars),
-                        interactive: interactive,
-                        defaultScrollbars: true,
-                        customStyle: customStyle,
-                        resize: this.options.resizeScrollbars,
-                        shrink: this.options.shrinkScrollbars,
-                        fade: this.options.fadeScrollbars,
-                        listenX: false
-                    };
+                if (this.options.scrollbars) {
+                    // Vertical scrollbar
+                    if (this.options.scrollY) {
+                        indicator = {
+                            el: createDefaultScrollbar('v', interactive, this.options.scrollbars),
+                            interactive: interactive,
+                            defaultScrollbars: true,
+                            customStyle: customStyle,
+                            resize: this.options.resizeScrollbars,
+                            shrink: this.options.shrinkScrollbars,
+                            fade: this.options.fadeScrollbars,
+                            listenX: false
+                        };
 
-                    this.wrapper.appendChild(indicator.el);
-                    indicators.push(indicator);
+                        this.wrapper.appendChild(indicator.el);
+                        indicators.push(indicator);
+                    }
+
+                    // Horizontal scrollbar
+                    if (this.options.scrollX) {
+                        indicator = {
+                            el: createDefaultScrollbar('h', interactive, this.options.scrollbars),
+                            interactive: interactive,
+                            defaultScrollbars: true,
+                            customStyle: customStyle,
+                            resize: this.options.resizeScrollbars,
+                            shrink: this.options.shrinkScrollbars,
+                            fade: this.options.fadeScrollbars,
+                            listenY: false
+                        };
+
+                        this.wrapper.appendChild(indicator.el);
+                        indicators.push(indicator);
+                    }
                 }
 
-                // Horizontal scrollbar
-                if (this.options.scrollX) {
-                    indicator = {
-                        el: createDefaultScrollbar('h', interactive, this.options.scrollbars),
-                        interactive: interactive,
-                        defaultScrollbars: true,
-                        customStyle: customStyle,
-                        resize: this.options.resizeScrollbars,
-                        shrink: this.options.shrinkScrollbars,
-                        fade: this.options.fadeScrollbars,
-                        listenY: false
-                    };
-
-                    this.wrapper.appendChild(indicator.el);
-                    indicators.push(indicator);
+                if (this.options.indicators) {
+                    // TODO: check concat compatibility
+                    indicators = indicators.concat(this.options.indicators);
                 }
-            }
 
-            if (this.options.indicators) {
-                // TODO: check concat compatibility
-                indicators = indicators.concat(this.options.indicators);
-            }
-
-            for (var i = indicators.length; i--;) {
-                this.indicators.push(new Indicator(this, indicators[i]));
-            }
-
-            // TODO: check if we can use array.map (wide compatibility and performance issues)
-            function _indicatorsMap(fn) {
-                for (var i = that.indicators.length; i--;) {
-                    fn.call(that.indicators[i]);
+                for (var i = indicators.length; i--;) {
+                    this.indicators.push(new Indicator(this, indicators[i]));
                 }
+
+                // TODO: check if we can use array.map (wide compatibility and performance issues)
+                function _indicatorsMap(fn) {
+                    for (var i = that.indicators.length; i--;) {
+                        fn.call(that.indicators[i]);
+                    }
+                }
+
+                if (this.options.fadeScrollbars) {
+                    this.on('scrollEnd', function () {
+                        _indicatorsMap(function () {
+                            this.fade();
+                        });
+                    });
+
+                    this.on('scrollCancel', function () {
+                        _indicatorsMap(function () {
+                            this.fade();
+                        });
+                    });
+
+                    this.on('scrollStart', function () {
+                        _indicatorsMap(function () {
+                            this.fade(1);
+                        });
+                    });
+
+                    this.on('beforeScrollStart', function () {
+                        _indicatorsMap(function () {
+                            this.fade(1, true);
+                        });
+                    });
+                }
+
+                this.on('refresh', function () {
+                    _indicatorsMap(function () {
+                        this.refresh();
+                    });
+                });
+
+                this.on('destroy', function () {
+                    _indicatorsMap(function () {
+                        this.destroy();
+                    });
+
+                    delete this.indicators;
+                });
             }
-
-            if (this.options.fadeScrollbars) {
-                this.on('scrollEnd', function () {
-                    _indicatorsMap(function () {
-                        this.fade();
-                    });
-                });
-
-                this.on('scrollCancel', function () {
-                    _indicatorsMap(function () {
-                        this.fade();
-                    });
-                });
-
-                this.on('scrollStart', function () {
-                    _indicatorsMap(function () {
-                        this.fade(1);
-                    });
-                });
-
-                this.on('beforeScrollStart', function () {
-                    _indicatorsMap(function () {
-                        this.fade(1, true);
-                    });
-                });
-            }
-
-            this.on('refresh', function () {
-                _indicatorsMap(function () {
-                    this.refresh();
-                });
-            });
-
-            this.on('destroy', function () {
-                _indicatorsMap(function () {
-                    this.destroy();
-                });
-
-                delete this.indicators;
-            });
         };
     }, {}], 6: [function (require, module, exports) {
         module.exports = function (time) {
@@ -2200,6 +2216,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 this.scrollTo(newX, newY, 0);
 
                 // INSERT POINT: _wheel
+            }
+        };
+    }, {}], 16: [function (require, module, exports) {
+        module.exports = {
+            _getScrollerSize: function _getScrollerSize() {
+                this.scrollerWidth = Math.round(this.scroller.offsetWidth * this.scale);
+                this.scrollerHeight = Math.round(this.scroller.offsetHeight * this.scale);
             }
         };
     }, {}] }, {}, [4]);
