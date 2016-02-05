@@ -881,6 +881,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         extend(IScroll.prototype, require('./indicator/indicator'));
 
         (function (window, document, Math) {
+            if (typeof module !== 'undefined') {
+                module.exports = IScroll;
+            }
+
             if (typeof window !== 'undefined' && !window.IScroll) {
                 window.IScroll = IScroll;
             }
