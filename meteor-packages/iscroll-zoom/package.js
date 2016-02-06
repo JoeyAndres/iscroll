@@ -1,7 +1,7 @@
 Package.describe({
     name: "jandres:iscroll-zoom",
     summary: "https://github.com/JoeyAndres/iscroll.git",
-    version: "5.1.9-alpha2",
+    version: "5.1.9",
     documentation: null,
     git: "https://github.com/JoeyAndres/iscroll.git"
 });

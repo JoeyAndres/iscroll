@@ -3,4 +3,4 @@
 ._*
 node_modules
 /meteor-packages/*/.versions
-dist
+distnode_modules
